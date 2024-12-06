@@ -16,19 +16,20 @@ EXTENSIONS_MAPPING = {".mp3": "Musique",
                       ".odp": "Documents",
                       ".pages": "Documents"}
 
-BASE_DIR = Path('/Users/thibh/trieur_fichiers/data')
+Base_dir = Path('/Users/berou/Documents/FormationPython/exercice/data')
+#Le but c'est de trier les fichiers selon leur type( et donc leur extension) dans des sous-dossier 
+# Déjà je vais essayer de trier les clés par leur valeur. 
+for f in Base_dir.iterdir() :
+    if f.is_file():
 
-# On récupère tous les fichiers dans le dossier de base
-files = [f for f in BASE_DIR.iterdir() if f.is_file()]
-for file in files:  # On boucle sur chaque fichier
-    
-    # On récupère le dossier cible à partir du dictionnaire
-    dossier_cible = EXTENSIONS_MAPPING.get(file.suffix, "Divers")
-    # On concatène le dossier de base avec le dossier cible
-    dossier_cible_absolu = BASE_DIR / dossier_cible
-    # On crée le dossier cible s'il n'existe pas déjà
-    dossier_cible_absolu.mkdir(exist_ok=True)
-    # On concatène le dossier cible avec le nom du fichier
-    fichier_cible = dossier_cible_absolu / file.name
-    # On déplace le fichier
-    file.rename(fichier_cible)
+        Chemin_final = EXTENSIONS_MAPPING.get(f.suffix,"Divers")
+        
+        New_Dir = Base_dir / Chemin_final
+        
+        New_Dir.mkdir(parents=True, exist_ok=True)
+        
+        fichier_cible = New_Dir / f.name
+        # On déplace le fichier
+        f.rename(fichier_cible)
+        print(f"Dossier {New_Dir} créé ou déjà existant.")
+        
